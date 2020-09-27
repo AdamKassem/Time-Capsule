@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1046996770366",
+    "firebase_url": "https://time-capsule-a9325.firebaseio.com",
+    "project_id": "time-capsule-a9325",
+    "storage_bucket": "time-capsule-a9325.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046996770366:android:2e8a31769f54a10ce73b6f",
+        "android_client_info": {
+          "package_name": "com.example.flutter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046996770366-e3pu9dpg8gn1sn30ta35qqnq2iabvdvf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnCTlHF46NGU0THVMp57_GfKo0emE5yP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046996770366-e3pu9dpg8gn1sn30ta35qqnq2iabvdvf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
