@@ -21,7 +21,7 @@ class _SignInState extends State<SignIn> {
         body: Container(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
             child: RaisedButton(
-            child: Text('Sign in email'),
+            child: Text('Sign in with email'),
             onPressed: () async {
               dynamic result = await _auth.signInEmail();
               if(result==null){

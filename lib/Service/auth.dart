@@ -24,20 +24,7 @@ class AuthService{
 
   //Register with email/password
 
-  //Sign in with phone/password
-  Future signInPhone() async {
-    try{
-      UserCredential result = (await _auth.signInWithPhoneNumber(phoneNumber, verifier)) as UserCredential;
-      User user = result.user;
-      return user;
-    }
-    catch(e){
-      print(e.toString());
-      return null;
-    }
-  }
 
-  //Register with phone/password
 
   //Sign out
 }
