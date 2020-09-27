@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:time_capsule/Screens/wrapper.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Welcome to your Time Capsule',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Welcome to your Time Capsule'),
-        ),
-        body: Center(
-          child: Text('Hello :)'),
-        ),
-      ),
+      home: Wrapper(),
     );
   }
 }
