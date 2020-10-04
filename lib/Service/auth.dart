@@ -1,30 +1,54 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:time_capsule/Models/user.dart';
 
 class AuthService{
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  RecaptchaVerifier get verifier => null;
-
-  String get phoneNumber => null;
-
-
-  //Sign in with email/password
-  Future signInEmail() async {
-  try{
-    UserCredential result = await _auth.signInWithEmailAndPassword(email: null, password:null);
-    User user = result.user;
-    return user;
+  Users _userFromFirebaseUser(User user){
+    return user != null ? Users(uid: user.uid) : null;
   }
-  catch(e){
-    print(e.toString());
-        return null;
+
+  Stream<Users> get user{
+    return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
-}
 
-  //Register with email/password
+  //Register in with email/password
+  Future registerWithEmailAndPassword(String email, String password) async {
+    try{
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      User user = result.user;
+      return _userFromFirebaseUser(user);
+    }
+    catch(e){
+      print(e.toString());
+      return null;
+    }
 
+  }
+  //Sign in with email and password
+  Future signInWithEmailAndPassword(String email, String password) async {
+    try{
+      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      User user = result.user;
+      return _userFromFirebaseUser(user);
+    }
+    catch(e){
+      print(e.toString());
+      return null;
+    }
+
+  }
 
 
   //Sign out
+  Future signOut() async{
+    try{
+      return await _auth.signOut();
+    }
+    catch(e){
+      print(e.toString());
+      return null;
+    }
+  }
 }
