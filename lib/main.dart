@@ -4,8 +4,13 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:loading/loading.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() => runApp(MyApp());
+Future main() async {
+  await DotEnv().load('.env');
+  runApp(MyApp());
+}
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -35,7 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool isloading = false;
   Future uploadImage() async {
-    const url = "https://api.cloudinary.com/v1_1/****/upload";
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     setState(() {
@@ -47,18 +51,18 @@ class _MyHomePageState extends State<MyHomePage> {
       "file": await MultipartFile.fromFile(
         image.path,
       ),
-      "upload_preset": "<*Upload Preset Name *>",
-      "cloud_name": "<* cloud name*>",
+      "upload_preset": "timecapsule",
+      "cloud_name": "acmtimecapsule",
     });
     try {
       Response response = await dio.post(url, data: formData);
 
       var data = jsonDecode(response.toString());
-      print(data['secure_url']);
+      print(data[DotEnv().env['API_URL']]);
 
       setState(() {
         isloading = false;
-        imageUrl = data['secure_url'];
+        imageUrl = data['API_URL'];
       });
     } catch (e) {
       print(e);
