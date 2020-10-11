@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
       "cloud_name": "acmtimecapsule",
     });
     try {
-      Response response = await dio.post(url, data: formData);
+      Response response = await dio.post((DotEnv().env['API_URL']), data: formData);
 
       var data = jsonDecode(response.toString());
       print(data[DotEnv().env['API_URL']]);
