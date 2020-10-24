@@ -1,104 +1,47 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
+
+import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:convert';
-import 'package:dio/dio.dart';
-import 'package:loading/loading.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
-Future main() async {
-  await DotEnv().load('.env');
-  runApp(MyApp());
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // set cache as true if you don't want to make an upload call with files of the same filename
+  // in such case if the filepath/identifier has already been uploaded before, you simply get the previously cached response.
+  var cloudinary =
+  CloudinaryPublic('acmtimecapsule', 'timecapsule', cache: false);
+
+  // Using a file. For example, gotten from: https://pub.dev/packages/image_picker
+  var image = await ImagePicker.pickImage(source: ImageSource.camera);
+  //File file = File('');
+  CloudinaryResponse response = await cloudinary.uploadFile(
+    CloudinaryFile.fromFile(image.path,
+        resourceType: CloudinaryResourceType.Image),
+  );
+
+  print(response.secureUrl);
+
+  // Using Byte Data. For example gotten from: https://pub.dev/packages/multi_image_picker
+  final images = await MultiImagePicker.pickImages(maxImages: 4);
+
+  List<CloudinaryResponse> uploadedImages = await cloudinary.multiUpload(
+    images
+        .map(
+          (image) => CloudinaryFile.fromFutureByteData(
+        image.getByteData(),
+        identifier: image.identifier,
+      ),
+    )
+        .toList(),
+  );
+
+  print(uploadedImages[0].secureUrl);
 }
 
+class Asset {
+  String identifier = 'image.jpg';
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  var imageUrl;
-
-  bool isloading = false;
-  Future uploadImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      isloading = true;
-    });
-
-    Dio dio = Dio();
-    FormData formData = new FormData.fromMap({
-      "file": await MultipartFile.fromFile(
-        image.path,
-      ),
-      "upload_preset": "timecapsule",
-      "cloud_name": "acmtimecapsule",
-    });
-    try {
-      Response response = await dio.post((DotEnv().env['API_URL']), data: formData);
-
-      var data = jsonDecode(response.toString());
-      print(data[DotEnv().env['API_URL']]);
-
-      setState(() {
-        isloading = false;
-        imageUrl = data['API_URL'];
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: CircleAvatar(
-          radius: 100,
-          backgroundColor: Colors.blueAccent,
-          backgroundImage: imageUrl != null ? NetworkImage(imageUrl) : null,
-          child: imageUrl == null
-              ? !isloading
-              ? Icon(
-            Icons.person,
-            size: 100,
-            color: Colors.white,
-          )
-              : Loading(
-            indicator: BallPulseIndicator(),
-            size: 100.0,
-            color: Colors.red,
-          )
-              : Container(),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => uploadImage(),
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
+  Future<ByteData> getByteData() async => ByteData(10);
 }
