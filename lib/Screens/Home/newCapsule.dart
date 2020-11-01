@@ -1,17 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:time_capsule/Screens/wrapper.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
-import 'package:time_capsule/Service/auth.dart';
-import 'package:time_capsule/Models/user.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
-void main() async {
+class NewCapsule extends StatefulWidget {
+  @override
+  _NewCapsuleState createState() => _NewCapsuleState();
+}
+
+class _NewCapsuleState extends State<NewCapsule> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Create a New Capsule",
+          style: TextStyle(
+            fontFamily: 'SourceSansPro',
+            color: Colors.grey[800],
+          ),
+        ),
+        elevation: 1,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: Icon(Icons.arrow_back_ios),
+          color: Colors.blue,
+        ),
+      ),
+    );
+  }
+}
+
+main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // set cache as true if you don't want to make an upload call with files of the same filename
+  // in such case if the filepath/identifier has already been uploaded before, you simply get the previously cached response.
   var cloudinary =
   CloudinaryPublic('acmtimecapsule', 'timecapsule', cache: false);
 
@@ -40,25 +69,4 @@ void main() async {
   );
 
   print(uploadedImages[0].secureUrl);
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
-
-class Asset {
-  String identifier = 'image.jpg';
-
-  Future<ByteData> getByteData() async => ByteData(10);
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return StreamProvider<Users>.value(
-      value: AuthService().user,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Wrapper(),
-      ),
-    );
-  }
 }

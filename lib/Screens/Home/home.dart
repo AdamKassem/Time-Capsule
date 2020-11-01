@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:time_capsule/Screens/Home/pages.dart';
-import 'sidebar.dart';
 
 class Home extends StatefulWidget {
 

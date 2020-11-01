@@ -101,6 +101,16 @@ class _RegisterState extends State<Register> {
                       setState(() => password = val);
                     }
                   ),
+                  TextFormField(
+                      obscureText: true,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'SourceSansPro',
+                      ),
+                      decoration: InputDecoration(
+                        labelText: 'Confirm Password',
+                      ),
+                  ),
                   SizedBox(height: 20.0),
                   GestureDetector(
                     child: Container(

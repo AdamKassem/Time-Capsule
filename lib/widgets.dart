@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:time_capsule/Service/auth.dart';
+
+import 'Screens/Home/settings.dart';
+import 'Screens/Home/newCapsule.dart';
 
 class MainAppBar extends StatelessWidget {
   // const MainAppBar({
@@ -28,7 +30,11 @@ class MainAppBar extends StatelessWidget {
           icon: Icon(Icons.add),
           iconSize: 30,
           color: Colors.blue,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => NewCapsule()
+            ));
+          },
         ),
       ],
     );
@@ -36,10 +42,8 @@ class MainAppBar extends StatelessWidget {
 }
 
 class AppBarProfile extends StatelessWidget {
-  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 5,
@@ -48,8 +52,10 @@ class AppBarProfile extends StatelessWidget {
         icon: Icon(Icons.settings),
         iconSize: 30,
         color: Colors.blue,
-        onPressed: () async{
-          await _auth.signOut();
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => SettingsPage()
+          ));
         },
       ),
       title: FlutterLogo(
@@ -60,7 +66,11 @@ class AppBarProfile extends StatelessWidget {
           icon: Icon(Icons.add),
           iconSize: 30,
           color: Colors.blue,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => NewCapsule()
+            ));
+          },
         ),
       ],
     );
@@ -70,9 +80,9 @@ class AppBarProfile extends StatelessWidget {
 
 class DataSearch extends SearchDelegate<String>{
 
-  final cities = ["Charlie","Max", "Buddy", "Oscar","Milo","Toby","Jack"];
+  final names = ["Charlie","Max", "Buddy", "Oscar","Milo","Toby","Jack"];
 
-  final recentCities = ["Max"];
+  final recentNames = ["Buddy"];
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -115,8 +125,8 @@ class DataSearch extends SearchDelegate<String>{
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty ? recentCities : cities.where((p) => p.startsWith(query)).toList();
-    return suggestionList.isEmpty ? Text("No Results Found") : ListView.builder(
+    final suggestionList = query.isEmpty ? recentNames : names.where((p) => p.startsWith(query)).toList();
+    return suggestionList.isEmpty ? Text("No Results Found", style: TextStyle(fontFamily: 'SourceSansPro',fontSize: 18,),) : ListView.builder(
       itemBuilder: (context,index) => ListTile(
         onTap: () {
           showResults(context);

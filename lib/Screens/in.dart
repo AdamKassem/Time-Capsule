@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_capsule/Service/auth.dart';
+import 'forgotpassword.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -85,6 +86,26 @@ class _SignInState extends State<SignIn> {
                         onChanged: (val){
                           setState(() => password = val);
                       }
+                    ),
+                    SizedBox(height: 3),
+                    GestureDetector(
+                      onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => ForgotPassword()
+                      ));
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(2),
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                            color: Colors.blue[800],
+                            fontSize: 14,
+                            fontFamily: 'SourceSansPro',
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 20.0),
                     GestureDetector(
