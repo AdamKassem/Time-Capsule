@@ -37,36 +37,6 @@ class _NewCapsuleState extends State<NewCapsule> {
   }
 }
 
-main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // set cache as true if you don't want to make an upload call with files of the same filename
-  // in such case if the filepath/identifier has already been uploaded before, you simply get the previously cached response.
-  var cloudinary =
-  CloudinaryPublic('acmtimecapsule', 'timecapsule', cache: false);
 
-  // Using a file. For example, gotten from: https://pub.dev/packages/image_picker
-  var image = await ImagePicker.pickImage(source: ImageSource.camera);
-  //File file = File('');
-  CloudinaryResponse response = await cloudinary.uploadFile(
-    CloudinaryFile.fromFile(image.path,
-        resourceType: CloudinaryResourceType.Image),
-  );
 
-  print(response.secureUrl);
 
-  // Using Byte Data. For example gotten from: https://pub.dev/packages/multi_image_picker
-  final images = await MultiImagePicker.pickImages(maxImages: 4);
-
-  List<CloudinaryResponse> uploadedImages = await cloudinary.multiUpload(
-    images
-        .map(
-          (image) => CloudinaryFile.fromFutureByteData(
-        image.getByteData(),
-        identifier: image.identifier,
-      ),
-    )
-        .toList(),
-  );
-
-  print(uploadedImages[0].secureUrl);
-}
