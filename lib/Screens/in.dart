@@ -26,20 +26,6 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightBlue[200],
-      // appBar: AppBar(
-      //   backgroundColor: Colors.blue[400],
-      //   elevation: 0.0,
-      //   title: Text('Sign in to Time Capusle'),
-      //   actions: <Widget>[
-      //     FlatButton.icon(
-      //       icon: Icon(Icons.person),
-      //       label: Text('Register'),
-      //       onPressed: () {
-      //         widget.toggleView();
-      //       },
-      //     )
-      //   ],
-      // ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Container(

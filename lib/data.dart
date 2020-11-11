@@ -3,35 +3,20 @@ class HomeInfo {
   final String name;
   final String image;
   final String caption;
+  bool liked;
+  String likedNum;
+  bool template;
 
-  HomeInfo(
-      this.position, {
+  HomeInfo({
+      this.position,
       this.name,
       this.image,
       this.caption,
+      this.liked,
+      this.likedNum,
+      this.template,
     });
 }
-
-List<HomeInfo> home = [
-  HomeInfo(1,
-    name: 'Max',
-    image: 'https://res.cloudinary.com/acmtimecapsule/image/upload/v1604251475/unelvhvauunheqm5utfq.jpg',
-    caption:
-    "caption",
-  ),
-  HomeInfo(2,
-    name: 'Charlie',
-    image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80',
-    caption:
-    "caption",
-  ),
-  HomeInfo(3,
-    name: 'Oscar',
-    image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80',
-    caption:
-    "caption",
-  ),
-];
 
 class FriendNotifs {
   final String image;

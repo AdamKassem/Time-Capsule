@@ -140,10 +140,12 @@ class _NotificationsPState extends State<NotificationsP> {
                             Row(
                               children: <Widget>[
                                 SizedBox(width: 5),
-                                CircleAvatar(
-                                  backgroundImage: AssetImage(likeNotifs[index].image),
-                                  backgroundColor: Colors.transparent,
-                                  radius: 20,
+                                Container(
+                                  child: CircleAvatar(
+                                    backgroundImage: AssetImage(likeNotifs[index].image),
+                                    backgroundColor: Colors.transparent,
+                                    radius: 20,
+                                  ),
                                 ),
                                 SizedBox(width: 10),
                                 Column(

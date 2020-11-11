@@ -2,14 +2,39 @@ import 'package:flutter/material.dart';
 
 import 'Screens/Home/settings.dart';
 import 'Screens/Home/newCapsule.dart';
+import 'Screens/Home/releasePics.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
-class MainAppBar extends StatelessWidget {
-  // const MainAppBar({
-  //   Key key,
-  // }) : super(key: key);
+class MainAppBar extends StatefulWidget {
+
+  @override
+  _MainAppBarState createState() => _MainAppBarState();
+}
+
+class _MainAppBarState extends State<MainAppBar> {
+
+  List<Asset> images = List<Asset>();
+
+  Future<void> loadAssets() async {
+    await MultiImagePicker.pickImages(
+      maxImages: 5,
+      materialOptions: MaterialOptions(
+        actionBarTitle: "Album",
+        allViewTitle: "All View",
+        selectionLimitReachedText: "You can't select any more.",
+      ),
+      enableCamera: true,
+    );
+    if(mounted) {
+      Navigator.of(context).push(MaterialPageRoute(
+      builder: (BuildContext context) => DatePickerDemo()
+      ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 5,
@@ -31,9 +56,7 @@ class MainAppBar extends StatelessWidget {
           iconSize: 30,
           color: Colors.blue,
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => NewCapsule()
-            ));
+            loadAssets();
           },
         ),
       ],
@@ -41,7 +64,33 @@ class MainAppBar extends StatelessWidget {
   }
 }
 
-class AppBarProfile extends StatelessWidget {
+class AppBarProfile extends StatefulWidget {
+
+  @override
+  _AppBarProfileState createState() => _AppBarProfileState();
+}
+
+class _AppBarProfileState extends State<AppBarProfile> {
+
+  List<Asset> images = List<Asset>();
+
+  Future<void> loadAssets() async {
+    await MultiImagePicker.pickImages(
+      maxImages: 5,
+      materialOptions: MaterialOptions(
+        actionBarTitle: "Album",
+        allViewTitle: "All View",
+        selectionLimitReachedText: "You can't select any more.",
+      ),
+      enableCamera: true,
+    );
+    if(mounted) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => DatePickerDemo()
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -67,9 +116,7 @@ class AppBarProfile extends StatelessWidget {
           iconSize: 30,
           color: Colors.blue,
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => NewCapsule()
-            ));
+            loadAssets();
           },
         ),
       ],

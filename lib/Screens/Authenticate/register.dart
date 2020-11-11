@@ -75,6 +75,15 @@ class _RegisterState extends State<Register> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'SourceSansPro',
+                      ),
+                      decoration: InputDecoration(
+                        labelText: 'Name',
+                      ),
+                  ),
+                  TextFormField(
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: 'SourceSansPro',
